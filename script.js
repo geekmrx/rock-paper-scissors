@@ -1,26 +1,38 @@
 
+const display = document.querySelector('.display')
+const buttons = document.querySelectorAll('.btn')
+const shapes = ["rock", "paper", "scissors"]
+
 const getComputerChoice = () => {
-    let shapes = ["rock", "paper", "scissors"]
     return shapes[Math.floor(Math.random() * shapes.length)]
 }
+
 const playRound = (playerSelection, computerSelection) => {
     if (playerSelection === "rock" && computerSelection === "scissors" ||
-        computerSelection === "rock" && playerSelection === "scissors")
-        return "Rock beats scissors"
+        playerSelection === "scissors" && computerSelection === "rock" 
+    ) return "Rock beats scissors"
     if (playerSelection === "scissors" && computerSelection === "paper" ||
-        computerSelection === "scissors" && playerSelection === "paper")
-        return "Scissors beat paper"
-    if (playerSelection === "paper" && computerSelection === "rock" ||
-        computerSelection === "paper" && playerSelection === "rock")
-        return "Paper beats rock."
+        playerSelection === "paper" && computerSelection === "scissors"
+    ) return "Scissors beat paper"
+    if (
+        playerSelection === "paper" && computerSelection === "rock" ||
+        playerSelection === "rock" && computerSelection === "paper"
+    ) return "Paper beats rock."
     else
-        return "Draw"
+        return "A Draw"
 }
 
-const display = document.querySelector('.display')
-const buttons = document.querySelectorAll('button')
-buttons.forEach((button) => {
-    button.addEventListener('click', () => {
-        display.textContent = playRound(button.id, getComputerChoice())
-    })
-})
+function game(e) {
+    const target = e.target
+    display.textContent = playRound(target.id, getComputerChoice())
+}
+
+buttons.forEach(button => button.addEventListener('click', game))
+
+// buttons.forEach((button) => {
+//     button.addEventListener('click', () => {
+//         display.textContent = playRound(button.id, getComputerChoice())
+//     })
+// })
+
+// buttons.addEventListener('click', game)
